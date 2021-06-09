@@ -1,0 +1,11 @@
+<div class="grid">
+  <vs-row>
+    <vs-col :key="index" v-for="(employee, index) in employeeLst" w="2">
+      <SampleComponent
+        :ref="'sample-component-' + index"
+        :employeeName="employee"
+        @emitFunction="emitDemo">
+      </SampleComponent>
+    </vs-col>
+  </vs-row>
+</div>

@@ -1,0 +1,18 @@
+<div>
+  <vs-card>
+    <template #title>
+      <h3>Child Component</h3>
+    </template>
+    <template #text>
+      <div>
+        {{ employeeName }}
+      </div>
+      <div>
+        <vs-button
+          @click="emitEventToParent">
+          Click me
+        </vs-button>
+      </div>
+    </template>
+  </vs-card>
+</div>
