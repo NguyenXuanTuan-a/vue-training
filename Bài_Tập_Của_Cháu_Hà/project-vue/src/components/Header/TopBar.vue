@@ -1,8 +1,8 @@
 <template>
     <div class="topbar">
         <ul class="itemMenu">
-            <a href="#">
-                <li v-for="(item, key) in getDataTopBar" :key="key">
+            <a href="#" v-for="(item, key) in getDataTopBar" :key="key">
+                <li>
                     {{ item }}
                 </li>
             </a>
@@ -18,6 +18,10 @@
             font-size: 25px;
             display: flex;
             list-style: none;
+            a {
+                color: black;
+                text-decoration: none;
+            }
             li {
                 padding: 0 25px;
             }
