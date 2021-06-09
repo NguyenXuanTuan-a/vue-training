@@ -1,4 +1,16 @@
-<template src="./SampleView.html"></template>
+<template >
+<div class="grid">
+  <vs-row>
+    <vs-col :key="index" v-for="(employee, index) in employeeLst" w="2">
+      <SampleComponent
+        :ref="'sample-component-' + index"
+        :employeeName="employee"
+        @emitFunction="emitDemo">
+      </SampleComponent>
+    </vs-col>
+  </vs-row>
+</div>
+</template>
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
@@ -15,7 +27,8 @@ export default class SampleView extends Vue {
   private employeeLst: string[] = [
     'Liên',
     'Dũng',
-    'Tùng'
+    'Tùng',
+    'Hoang Trong Ha'
   ]
 
   private msg!: string;
