@@ -1,4 +1,4 @@
-# mc-donald
+# project-vue
 
 ## Project setup
 ```
