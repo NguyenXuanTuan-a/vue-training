@@ -9,7 +9,6 @@
 <script lang="ts">
     import Header from '@/components/Header/Header.vue'
     import { Component, Vue, Prop } from 'vue-property-decorator'
-    import { component } from 'vue/types/umd'
     @Component({
       components: {
         Header
