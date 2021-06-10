@@ -1,5 +1,6 @@
 <template>
-    <div class="container">
+<div class="wrapHeadertop">
+    <v-container>
         <div class="wrapHeader">
             <div class="logo">
                 <a href="/">
@@ -11,10 +12,15 @@
                 <TopBar :getDataTopBar='Menu.menu'/>
             </div>
         </div>
-    </div>
+    </v-container>
+</div>
 </template>
 <style lang="scss">
-    .wrapHeader {
+.wrapHeadertop {
+    width: 100%;
+    box-shadow: 25px -4px 7px 3px;
+
+.wrapHeader {
         width: 100%;
         display: flex;
         height: 200px;
@@ -29,6 +35,7 @@
             width: 100%;
         }
     }
+}
 </style>
 <script lang="ts">
     import { Component, Vue, Prop } from 'vue-property-decorator'

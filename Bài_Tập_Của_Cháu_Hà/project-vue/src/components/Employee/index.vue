@@ -90,6 +90,7 @@
         display: flex;
         padding: 5px 25px 5px 25px;
         justify-content: space-around;
+
         .namePart {
             display: flex;
             width: 100%;
@@ -105,6 +106,9 @@
         justify-content: space-around;
         background: #b3b3b3; ;
         color: #fff;
+        img {
+            object-fit: cover;
+        }
     }
     .wrapInforUser {
         display: flex;
@@ -112,6 +116,9 @@
         justify-content: space-around;
         background:#00bcd4 ;
         color: #fff;
+         img {
+            object-fit: cover;
+        }
     }
     .wrapButton {
         display: flex;
