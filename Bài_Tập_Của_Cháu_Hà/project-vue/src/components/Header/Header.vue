@@ -2,7 +2,10 @@
     <div class="container">
         <div class="wrapHeader">
             <div class="logo">
-                <img :src="Menu.logo">
+                <a href="/">
+                    <img :src="Menu.logo">
+                </a>
+                
             </div>
             <div class="wrapTopBar">
                 <TopBar :getDataTopBar='Menu.menu'/>
@@ -31,7 +34,7 @@
     import { Component, Vue, Prop } from 'vue-property-decorator'
     import TopBar from './TopBar.vue'
     interface dataHeader {
-        menu: string[]
+        menu: any[]
         logo: string
     }
     @Component({
@@ -42,12 +45,34 @@
     export default class Header extends Vue{
         Menu: dataHeader = {
             menu: [
-                'Our Menu',
-                'McCafé',
-                'About Our Food',
-                'Exclusive Deals',
-                'Download App',
-                'Locate',
+               {
+                   name:  'Our Menu',
+                   url :  '/ourmenu',
+               },
+               {
+                   name:  'McCafé',
+                   url :  '/mccafe',
+               },
+                {
+                   name:  'About Our Food',
+                   url :  '/aboutourfood',
+               },
+               {
+                   name: 'Exclusive Deals',
+                   url :  '/exclusivedeals',
+               },
+               {
+                   name: 'Download App',
+                   url :  '/downloadapp',
+               },
+               {
+                   name: 'locate',
+                   url :  '/locate',
+               },
+               {
+                   name: 'Information',
+                   url :  '/information',
+               },
             ],
             logo: '../img/logo.jpg'
         }
