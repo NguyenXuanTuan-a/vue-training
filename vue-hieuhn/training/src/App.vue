@@ -1,19 +1,19 @@
 <template>
-  <v-app>
-    <Header 
-      :lists="menus.lists"
-      :logo="menus.logo"
-      @emitName="emitFunc"
-      >
-    </Header>
-
+  <div id="app">
+    <div id="nav">
+      <Header 
+        :lists="menus.lists"
+        :logo="menus.logo"
+        @emitName="emitFunc"
+        >
+      </Header>
+    </div>
     <v-main>
-      <h1 class="title">
-          Welcome to VueJs
-      </h1>
+      <v-container>
+          <router-view />
+      </v-container>
     </v-main>
-
-  </v-app>
+  </div>
 </template>
 
 <script lang="ts">
@@ -21,24 +21,20 @@ import { Component, Vue } from 'vue-property-decorator'
 import Header from './components/header/Header.vue'
 
 interface menu {
-  lists: any[],
+  lists: any[]
   logo: string
 }
 
 @Component({
   components: {
-    Header
+    Header,
   }
 })
-
-
 export default class App extends Vue {
   menus: menu = {
     lists: [
-      { name: 'Menu 1', url: '/menu1' },
-      { name: 'Menu 2', url: '/menu2' },
-      { name: 'Menu 3', url: '/menu3' },
-      { name: 'Menu 4', url: '/menu4' },
+      { name: 'Project', url: '/project' },
+      { name: 'Staff', url: '/staff' },
     ],
     logo: './assets/images/logo.png'
   }
@@ -50,9 +46,24 @@ export default class App extends Vue {
 </script>
 
 <style lang="scss">
-  .v-application .title {
-    text-align: center;
-    font-size: 100px !important;
-    margin: 100px 0;
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+
+#nav {
+  padding: 30px;
+
+  a {
+    font-weight: bold;
+    color: #2c3e50;
+
+    &.router-link-exact-active {
+      color: #42b983;
+    }
   }
+}
 </style>
