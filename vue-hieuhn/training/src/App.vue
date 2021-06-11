@@ -3,7 +3,6 @@
     <div id="nav">
       <Header 
         :lists="menus.lists"
-        :logo="menus.logo"
         @emitName="emitFunc"
         >
       </Header>
@@ -22,7 +21,6 @@ import Header from './components/header/Header.vue'
 
 interface menu {
   lists: any[]
-  logo: string
 }
 
 @Component({
@@ -35,8 +33,7 @@ export default class App extends Vue {
     lists: [
       { name: 'Project', url: '/project' },
       { name: 'Staff', url: '/staff' },
-    ],
-    logo: './assets/images/logo.png'
+    ]
   }
 
   emitFunc = () => {

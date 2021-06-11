@@ -2,7 +2,9 @@
   <v-app-bar>
     <v-container>
       <div id="header">
-        <img @click="showDialog" class="logo" :src="logo" alt="" />
+        <a href="/">
+          <img @click="showDialog" class="logo" :src="logo" alt="" />
+        </a>
         <ul class="header-list">
           <li class="header-item" v-for="(item, i) in lists" :key="i">
             <router-link :to="item.url" class="header-link">{{
@@ -21,7 +23,8 @@ import { Component, Emit, Prop, Vue } from "vue-property-decorator";
 @Component
 export default class Header extends Vue {
   @Prop() private lists?: string[];
-  @Prop() private logo?: string;
+
+  logo = '/assets/images/logo.png'
 
   showDialog = () => {
     this.$emit("emitName");

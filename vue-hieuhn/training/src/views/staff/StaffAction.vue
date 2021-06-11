@@ -60,7 +60,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from "vue-property-decorator";
+import { Component, Vue, Watch, Emit } from "vue-property-decorator";
 
 @Component
 export default class StaffAction extends Vue {

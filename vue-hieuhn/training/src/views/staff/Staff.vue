@@ -1,62 +1,9 @@
 <template>
   <div>
-    <!-- <v-simple-table>
-            <template v-slot:default>
-                <thead>
-                    <tr>
-                        <th>
-                            Name
-                        </th>
-                        <th>
-                            Seniority
-                        </th>
-                        <th>
-                            Is working
-                        </th>
-                        <th>
-                            Action
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr 
-                        v-for="(item, i) in staffList" 
-                        :key="i" 
-                        :class="{isWorking: !item.isWorking, seniority: item.seniority >= 5 && item.isWorking}"
-                    >
-                        <td>
-                            {{ item.name }}
-                        </td>
-                        <td>
-                            {{ item.seniority }} years
-                        </td>
-                        <td v-if="item.isWorking">
-                           yes
-                        </td>
-                        <td v-else>
-                            no
-                        </td>
-                        <td>
-                            <router-link class="btn-link" :to="{ name: 'StaffAction', params: { id: item.id, item: item } }">
-                                <v-btn small elevation="2" class="btn-detail">
-                                    Chi tiết
-                                </v-btn>
-                            </router-link>
-                            <router-link class="btn-link" to="">
-                                <v-btn small elevation="2" class="btn-del">
-                                    Xoá
-                                </v-btn>
-                            </router-link>
-                        </td>
-                    </tr>
-                </tbody>
-            </template>
-        </v-simple-table> -->
-
     <v-row>
       <v-col md="2" v-for="(item, i) in staffList" :key="i">
         <v-card elevation="4" outlined>
-          <h1 class="cart-header" :class="{ disabled: !item.isWorking }">
+          <h1 class="cart-header" :class="{ disabled: !item.isWorking, staff: item.seniority < 5 && item.isWorking }">
             <v-avatar
               color="primary"
               size="40"
@@ -103,11 +50,24 @@
         </v-card>
       </v-col>
     </v-row>
+
+    <v-btn @click="addStaff">
+      them thanh vien
+    </v-btn>
+    <p>Trò gấp quá không kịp làm form thêm nên trò thêm thành viên kiểu...Mì ăn liền</p>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Emit } from "vue-property-decorator";
+
+interface staff {
+      id: number
+      name: string
+      seniority: number
+      isWorking: boolean
+      avatar: string
+}
 
 @Component
 export default class Staff extends Vue {
@@ -126,7 +86,11 @@ export default class Staff extends Vue {
       isWorking: true,
       avatar: "http://ativn.edu.vn/wp-content/uploads/2018/03/user.png",
     },
-    { id: 3, name: "Nguyen Thi My", seniority: 7, isWorking: true, avatar: "" },
+    { id: 3, 
+      name: "Nguyen Thi My", 
+      seniority: 7, 
+      isWorking: true, 
+      avatar: "" },
     {
       id: 4,
       name: "Member asda",
@@ -135,9 +99,21 @@ export default class Staff extends Vue {
       avatar: "http://ativn.edu.vn/wp-content/uploads/2018/03/user.png",
     },
   ];
-
+  
   deleteStaff(i: number): void {
     this.staffList.splice(i, 1);
+  }
+
+  staff: staff = {
+      id: this.staffList.length + 1,
+      name: 'Ten member',
+      seniority: Math.floor(Math.random() * 11),
+      isWorking: true,
+      avatar: '',
+  }
+
+  addStaff() {
+    this.staffList.push(this.staff)
   }
 }
 </script>
@@ -195,5 +171,9 @@ export default class Staff extends Vue {
 }
 .cart-avatar {
   margin-right: 10px;
+}
+.staff {
+  background: white;
+  color: black;
 }
 </style>
