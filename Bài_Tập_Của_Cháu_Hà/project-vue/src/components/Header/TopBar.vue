@@ -1,9 +1,9 @@
 <template>
     <div class="topbar">
         <ul class="itemMenu">
-            <a href="#" v-for="(item, key) in getDataTopBar" :key="key">
+            <a v-for="(item, key) in getDataTopBar" :key="key" :href="item.url">
                 <li>
-                    {{ item }}
+                    {{ item.name }}
                 </li>
             </a>
         </ul>
