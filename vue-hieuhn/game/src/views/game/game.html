@@ -1,0 +1,33 @@
+<div id="game">
+    <h1 class="title">GAME</h1>
+    <div class="screen">
+        <div class="figure">
+            <div class="figure-box">
+                <img src="assets/images/monster.PNG" alt="">
+                <div class="health-box">
+                    <div class="health" :style="{width: healthMonster + '%'}"></div>
+                </div>
+            </div>
+            <div class="figure-box">
+                <img src="assets/images/yasuo.PNG" alt="">
+                <div class="health-box">
+                    <div class="health" :style="{width: healthHero + '%'}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="result" v-if="result">
+        <h1 v-if="result == 'hero'">You Win!</h1>
+        <h1 v-else-if="result == 'monster'">You Lose!</h1>
+        <button @click="start" class="start-game">Start Game!</button>
+    </div>
+    <div class="controls" v-else>
+        <button @click="attack">Tấn công</button>
+        <button @click="powerAttack">Kỹ năng đăng biệt</button>
+        <button @click="health">Hồi máu</button>
+        <button @click="surrender">Đầu hàng</button>
+    </div>
+    <div class="footer">
+        We will develop more in the future
+    </div>
+</div>
