@@ -5,6 +5,7 @@ import DetailProject from "../views/project/DetailProject.vue";
 import Staff from "../views/staff/Staff.vue";
 import StaffAction from "../views/staff/StaffAction.vue";
 import Home from '../views/home/Home.vue'
+import Add from '../views/staff/Add.vue'
 
 Vue.use(VueRouter);
 

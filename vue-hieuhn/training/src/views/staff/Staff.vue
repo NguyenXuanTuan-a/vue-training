@@ -4,16 +4,14 @@
       <StaffCon v-for="(item, i) in staffList" :key="i" :item="item" :i="i" @deleteItem="deleteItem($event)"></StaffCon>
     </v-row>
 
-    <v-btn @click="addStaff">
-      them thanh vien
-    </v-btn>
-    <p>Trò gấp quá không kịp làm form thêm nên trò thêm thành viên kiểu...Mì ăn liền</p>
+    <Add @data="addStaff($event)"></Add>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Emit } from "vue-property-decorator";
 import StaffCon from './StaffCon.vue'
+import Add from './Add.vue'
 
 interface staff {
       id: number
@@ -25,7 +23,7 @@ interface staff {
 
 @Component({
   components: {
-    StaffCon
+    StaffCon, Add
   }
 })
 export default class Staff extends Vue {
@@ -66,12 +64,12 @@ export default class Staff extends Vue {
       avatar: '',
   }
 
-  addStaff() {
-    this.staffList.push(this.staff)
-  }
-
   deleteItem(i: number) {
     this.staffList.splice(i, 1);
+  }
+
+  addStaff(data: any) {
+    this.staffList.push(data)
   }
 }
 </script>
