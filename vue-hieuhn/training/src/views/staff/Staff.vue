@@ -1,54 +1,7 @@
 <template>
   <div>
     <v-row>
-      <v-col md="2" v-for="(item, i) in staffList" :key="i">
-        <v-card elevation="4" outlined>
-          <h1 class="cart-header" :class="{ disabled: !item.isWorking, staff: item.seniority < 5 && item.isWorking }">
-            <v-avatar
-              color="primary"
-              size="40"
-              class="cart-avatar"
-              v-if="item.avatar != ''"
-            >
-              <img :src="item.avatar" alt="" />
-            </v-avatar>
-            <v-avatar
-              color="primary"
-              size="40"
-              class="cart-avatar"
-              v-if="item.avatar == ''"
-            >
-              <img
-                src="https://thumbs.dreamstime.com/z/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg"
-                alt=""
-              />
-            </v-avatar>
-
-            <span>{{ item.name }}</span>
-          </h1>
-
-          <v-card-text class="text-cart">
-            <p>
-              Da lam viec <span class="bold">{{ item.seniority }} years</span>
-            </p>
-            <p>
-              Dang lam viec <span class="bold">{{ item.isWorking }}</span>
-            </p>
-          </v-card-text>
-
-          <div class="cart-action">
-            <router-link
-              class="cart-button"
-              :to="{ name: 'StaffAction', params: { id: item.id, item: item } }"
-            >
-              <v-btn small class="cart-button-detail"> Chi tiet </v-btn>
-            </router-link>
-            <router-link class="cart-button" to="">
-              <v-btn small @click="deleteStaff(i)"> Xoa </v-btn>
-            </router-link>
-          </div>
-        </v-card>
-      </v-col>
+      <StaffCon v-for="(item, i) in staffList" :key="i" :item="item" :i="i" @deleteItem="deleteItem($event)"></StaffCon>
     </v-row>
 
     <v-btn @click="addStaff">
@@ -60,6 +13,7 @@
 
 <script lang="ts">
 import { Component, Vue, Emit } from "vue-property-decorator";
+import StaffCon from './StaffCon.vue'
 
 interface staff {
       id: number
@@ -69,7 +23,11 @@ interface staff {
       avatar: string
 }
 
-@Component
+@Component({
+  components: {
+    StaffCon
+  }
+})
 export default class Staff extends Vue {
   staffList = [
     {
@@ -99,10 +57,6 @@ export default class Staff extends Vue {
       avatar: "http://ativn.edu.vn/wp-content/uploads/2018/03/user.png",
     },
   ];
-  
-  deleteStaff(i: number): void {
-    this.staffList.splice(i, 1);
-  }
 
   staff: staff = {
       id: this.staffList.length + 1,
@@ -114,6 +68,10 @@ export default class Staff extends Vue {
 
   addStaff() {
     this.staffList.push(this.staff)
+  }
+
+  deleteItem(i: number) {
+    this.staffList.splice(i, 1);
   }
 }
 </script>
