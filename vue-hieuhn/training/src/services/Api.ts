@@ -20,6 +20,10 @@ class Api {
     update(id: number, name: string) {
         return axios.post(`http://127.0.0.1:8000/api/update`, {id: id, name: name})
     }
+
+    search(text: any) {
+        return axios.post(`http://127.0.0.1:8000/api/search`, {text: text})
+    }
 }
 
 export default new Api

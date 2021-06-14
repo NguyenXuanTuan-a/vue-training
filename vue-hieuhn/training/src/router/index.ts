@@ -6,6 +6,7 @@ import Staff from "../views/staff/Staff.vue";
 import StaffAction from "../views/staff/StaffAction.vue";
 import Home from '../views/home/Home.vue'
 import Add from '../views/staff/Add.vue'
+import Search from '../views/staff/Search.vue'
 
 Vue.use(VueRouter);
 
@@ -30,6 +31,12 @@ const routes: Array<RouteConfig> = [
     path: "/staff",
     name: "Staff",
     component: Staff,
+  },
+  {
+    path: "/search",
+    name: "Search",
+    component: Search,
+    props: true,
   },
   {
     path: "/staff/:id",

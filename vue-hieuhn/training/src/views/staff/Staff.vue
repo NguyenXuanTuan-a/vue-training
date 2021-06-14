@@ -1,6 +1,8 @@
 <template>
   <div>
     <v-row>
+    </v-row>
+    <v-row>
       <StaffCon v-for="(item, i) in lists" :key="i" :item="item" :i="i" @deleteItem="deleteItem($event)"></StaffCon>
     </v-row>
 
@@ -12,6 +14,7 @@
 import { Component, Vue, Emit } from "vue-property-decorator";
 import StaffCon from './StaffCon.vue'
 import Add from './Add.vue'
+import Search from './Search.vue'
 import Api from '../../services/Api'
 
 @Component({

@@ -19,3 +19,4 @@ Route::get('/lists', 'Api\UserController@lists');
 Route::get('/delete/{id}', 'Api\UserController@deleteItem');
 Route::get('/item/{id}', 'Api\UserController@item');
 Route::post('/update', 'Api\UserController@update');
+Route::post('/search', 'Api\UserController@search');

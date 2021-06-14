@@ -5,7 +5,7 @@
         <v-card width="100%">
           <v-img
             height="200px"
-            src="https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg"
+            :src="item.avatar"
           >
           </v-img>
           <v-card-text>
@@ -32,8 +32,16 @@
                     >Working:
                     <span class="bold">{{
                       item.is_work
-                    }}</span></v-list-item-title
-                  >
+                    }}</span></v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-content>
+                  <v-list-item-title class="text-left"
+                    >
+                    <span class="bold">{{
+                      item.level
+                    }}</span></v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
             </v-list-item-group>
@@ -51,6 +59,16 @@
                   required
                 ></v-text-field>
                 <span>{{ errors[0] }}</span>
+              </ValidationProvider>
+              <ValidationProvider>
+                <template>
+                  <v-file-input
+                    multiple
+                    label="File input"
+                    v-model="formInformation.avatar"
+                    webkitdirectory
+                  ></v-file-input>
+                </template>
               </ValidationProvider>
               <v-btn :disabled="!formInformation.valid" class="mr-4" @click="save"
                 >Save</v-btn
@@ -78,7 +96,8 @@ extend('min', {
 
 interface form {
   valid: boolean
-  name: string
+  name: string,
+  avatar: Array<any>
 }
 
 @Component
@@ -90,9 +109,14 @@ export default class StaffAction extends Vue {
   formInformation: form = {
     valid: false,
     name: "",
+    avatar: []
   };
 
   created() {
+    this.getItem();
+  }
+
+  getItem() {
     Api.getItem(this.id).then((response: any) => {
       this.item = response.data
     })
@@ -109,8 +133,8 @@ export default class StaffAction extends Vue {
 
   save() {
     Api.update(parseInt(this.id), this.formInformation.name).then((response: any) => {
+      this.getItem();
       alert("thanh cong")
-      this.$router.push({name: 'Staff'})
     })
   }
 }

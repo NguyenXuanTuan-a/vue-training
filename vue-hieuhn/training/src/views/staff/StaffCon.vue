@@ -21,7 +21,6 @@
                 alt=""
               />
             </v-avatar>
-
             <span>{{ item.name }}</span>
           </h1>
 
@@ -30,7 +29,10 @@
               Da lam viec <span class="bold">{{ item.year }} years</span>
             </p>
             <p>
-              Dang lam viec <span class="bold">{{ item.isWorking }}</span>
+              Dang lam viec <span class="bold">{{ item.is_work }}</span>
+            </p>
+            <p>
+              <span class="bold">{{ item.level }}</span>
             </p>
           </v-card-text>
 

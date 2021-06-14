@@ -13,7 +13,8 @@ class UserController extends Controller
             'name' => $request->name,
             'avatar' => $request->avatar,
             'year' => $request->seniority,
-            'is_work' => $request->isWorking
+            'is_work' => $request->isWorking,
+            'level' => $request->level
         ]);
         return response()->json([
             'status' => true
@@ -47,4 +48,9 @@ class UserController extends Controller
         $user->save();
         return response()->json([], 200);
     }
+
+    public function search(Request $request) {
+        dd($request->all());
+    }
+
 }

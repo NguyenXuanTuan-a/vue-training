@@ -3,7 +3,7 @@
         <ValidationObserver v-slot="{ handleSubmit }">
             <form action="" @submit.prevent="handleSubmit(onSubmit)">
                 <ValidationProvider rules="required|min" v-slot="{ errors }">
-                    <input v-model="data.name" type="text">
+                    <input v-model="data.name" type="text" placeholder="Name">
                     <div>{{ errors[0] }}</div>
                 </ValidationProvider>
                 <br><br>
@@ -14,6 +14,16 @@
                         </option>
                     </select>
                     <input type="hidden" name="value" :value="data.year.value">
+                    <div>{{ errors[0] }}</div>
+                </ValidationProvider>
+                <br><br>
+                <ValidationProvider rules="required" v-slot="{ errors }">
+                    <select name="" id="" v-model="data.level">
+                        <option :value="level" v-for="level in levels" :key="level">
+                            {{ level }}
+                        </option>
+                    </select>
+                    <input type="hidden" name="value" :value="data.level.value">
                     <div>{{ errors[0] }}</div>
                 </ValidationProvider>
                 <br><br>
@@ -61,7 +71,22 @@ export default class Add extends Vue {
     avatar: "",
     year: 2021,
     isWorking: true,
+    level: ""
   };
+
+    levels = [
+        'level 1',
+        'level 2',
+        'level 3',
+        'level 4',
+        'level 5',
+        'level 6',
+        'level 7',
+        'level 8',
+        'level 9',
+        'level 10',
+    ]
+
 
   get years() {
       const year = new Date().getFullYear()
@@ -73,7 +98,8 @@ export default class Add extends Vue {
           name: this.data.name,
           seniority: this.data.year,
           isWorking: true,
-          avatar: this.data.avatar
+          avatar: this.data.avatar,
+          level: this.data.level
       }
   }
 

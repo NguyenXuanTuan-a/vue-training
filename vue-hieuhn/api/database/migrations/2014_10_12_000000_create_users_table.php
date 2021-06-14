@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->longText('avatar');
             $table->integer('year');
+            $table->string('level');
             $table->string('is_work');
             $table->string('email')->nullable();
             $table->timestamp('email_verified_at')->nullable();
