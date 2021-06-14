@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Employee;
+use Exception;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -40,10 +41,13 @@ class EmployeeController extends Controller
     // update post
     public function update($id, Request $request)
     {
-        $post = Employee::find($id);
-        $post->update($request->all());
- 
-        return response()->json('Cập nhật thông tin thành công');
+        try {
+            $post = Employee::find($id);
+            $post->update($request->all());
+            return response()->json('Cập nhật thông tin thành công');
+        } catch (Exception $e) {
+            return response()->json($e);
+        }
     }
  
     // delete post
