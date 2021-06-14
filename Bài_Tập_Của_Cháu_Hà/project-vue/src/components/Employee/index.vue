@@ -57,7 +57,11 @@
                     params: { id: item.id, items: item },
                   }"
                 >
-                  <v-btn text class="detail"> Detail </v-btn>
+                  <v-btn text 
+                    class="detail"
+                    @click="Detail(item, key)"
+                  > Detail 
+                  </v-btn>
                 </router-link>
                 <v-btn text @click="deleteEvent(key)" class="delete"> Delete </v-btn>
               </v-card-actions>
@@ -143,11 +147,12 @@ export default class App extends Vue {
       });
   }
 
-  // refreshList() {
-  //   this.retrieveEmployee();
-  //   this.currentEmployee = {} as Employee;
-  //   this.currentIndex = -1;
-  // }
+  Detail(item: Employee, key:number) {
+ 
+    item = {} as Employee;
+    // this.currentEmployee = {} as Employee;
+    // this.currentIndex = -1;
+  }
 
   // setActiveTutorial(employees: Employee, index: number) {
   //   this.currentEmployee = employees;
