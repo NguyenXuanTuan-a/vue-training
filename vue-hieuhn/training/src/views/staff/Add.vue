@@ -4,7 +4,7 @@
             <form action="" @submit.prevent="handleSubmit(onSubmit)">
                 <ValidationProvider rules="required|min" v-slot="{ errors }">
                     <input v-model="data.name" type="text">
-                    <span>{{ errors[0] }}</span>
+                    <div>{{ errors[0] }}</div>
                 </ValidationProvider>
                 <br><br>
                 <ValidationProvider rules="required" v-slot="{ errors }">
@@ -14,12 +14,12 @@
                         </option>
                     </select>
                     <input type="hidden" name="value" :value="data.year.value">
-                    <span>{{ errors[0] }}</span>
+                    <div>{{ errors[0] }}</div>
                 </ValidationProvider>
                 <br><br>
                 <ValidationProvider rules="required|min" v-slot="{ errors }">
                     <input v-model="data.avatar" type="text" placeholder="Link ảnh">
-                    <span>{{ errors[0] }}</span>
+                    <div>{{ errors[0] }}</div>
                 </ValidationProvider>
                 <br><br>
                 <v-btn type="submit">
@@ -46,7 +46,7 @@ extend('required', {
 })
 
 extend('min', {
-    validate(value) {
+    validate(value: string) {
         return {
             valid: value.length >= 6
         }
@@ -96,5 +96,10 @@ input {
 }
 .add {
     margin: 100px 0;
+}
+select {
+    width: 300px;
+    background: #CCC;
+    padding: 20px;
 }
 </style>

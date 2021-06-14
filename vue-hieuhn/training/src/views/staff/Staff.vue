@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row>
-      <StaffCon v-for="(item, i) in staffList" :key="i" :item="item" :i="i" @deleteItem="deleteItem($event)"></StaffCon>
+      <StaffCon v-for="(item, i) in lists" :key="i" :item="item" :i="i" @deleteItem="deleteItem($event)"></StaffCon>
     </v-row>
 
     <Add @data="addStaff($event)"></Add>
@@ -12,14 +12,7 @@
 import { Component, Vue, Emit } from "vue-property-decorator";
 import StaffCon from './StaffCon.vue'
 import Add from './Add.vue'
-
-interface staff {
-      id: number
-      name: string
-      seniority: number
-      isWorking: boolean
-      avatar: string
-}
+import Api from '../../services/Api'
 
 @Component({
   components: {
@@ -27,49 +20,31 @@ interface staff {
   }
 })
 export default class Staff extends Vue {
-  staffList = [
-    {
-      id: 1,
-      name: "Hoang Ngoc Hieu",
-      seniority: 10,
-      isWorking: true,
-      avatar: "http://ativn.edu.vn/wp-content/uploads/2018/03/user.png",
-    },
-    {
-      id: 2,
-      name: "Hoang Trong Ha",
-      seniority: 3,
-      isWorking: true,
-      avatar: "http://ativn.edu.vn/wp-content/uploads/2018/03/user.png",
-    },
-    { id: 3, 
-      name: "Nguyen Thi My", 
-      seniority: 7, 
-      isWorking: true, 
-      avatar: "" },
-    {
-      id: 4,
-      name: "Member asda",
-      seniority: 10,
-      isWorking: false,
-      avatar: "http://ativn.edu.vn/wp-content/uploads/2018/03/user.png",
-    },
-  ];
 
-  staff: staff = {
-      id: this.staffList.length + 1,
-      name: 'Ten member',
-      seniority: Math.floor(Math.random() * 11),
-      isWorking: true,
-      avatar: '',
+  private lists: Array<any> = []
+
+  beforeMount() {
+    this.apiList()
   }
 
-  deleteItem(i: number) {
-    this.staffList.splice(i, 1);
-  }
+  apiList() {
+    Api.getAll().then((response: any) => {
+      this.lists = response.data
+    }).catch((errors) => {
+      console.log(errors)
+    });
+  } 
 
   addStaff(data: any) {
-    this.staffList.push(data)
+    Api.create(data).then((response: any) => {
+      this.apiList()
+    })
+  }
+
+  deleteItem(id: number) {
+    Api.delete(id).then((response: any) => {
+      this.apiList()
+    })
   }
 }
 </script>

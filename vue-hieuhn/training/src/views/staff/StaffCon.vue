@@ -27,7 +27,7 @@
 
           <v-card-text class="text-cart">
             <p>
-              Da lam viec <span class="bold">{{ item.seniority }} years</span>
+              Da lam viec <span class="bold">{{ item.year }} years</span>
             </p>
             <p>
               Dang lam viec <span class="bold">{{ item.isWorking }}</span>
@@ -37,12 +37,12 @@
           <div class="cart-action">
             <router-link
               class="cart-button"
-              :to="{ name: 'StaffAction', params: { id: item.id, item: item } }"
+              :to="{ name: 'StaffAction', params: { id: item.id } }"
             >
               <v-btn small class="cart-button-detail"> Chi tiet </v-btn>
             </router-link>
             <router-link class="cart-button" to="">
-              <v-btn small @click="deleteStaff(i)"> Xoa </v-btn>
+              <v-btn small @click="deleteStaff(item.id)"> Xoa </v-btn>
             </router-link>
           </div>
         </v-card>
@@ -51,6 +51,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
+import Api from '../../services/Api'
 
 @Component
 export default class StaffCon extends Vue {

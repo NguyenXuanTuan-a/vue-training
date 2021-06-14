@@ -8,7 +8,6 @@
             src="https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg"
           >
           </v-img>
-
           <v-card-text>
             <div class="staff-title">
               {{ item.name }}
@@ -22,7 +21,7 @@
                   <v-list-item-title class="text-left"
                     >Have worked:
                     <span class="bold"
-                      >{{ item.seniority }} years</span
+                      >{{ item.year }} years</span
                     ></v-list-item-title
                   >
                 </v-list-item-content>
@@ -32,7 +31,7 @@
                   <v-list-item-title class="text-left"
                     >Working:
                     <span class="bold">{{
-                      item.isWorking
+                      item.is_work
                     }}</span></v-list-item-title
                   >
                 </v-list-item-content>
@@ -43,17 +42,21 @@
       </v-col>
       <v-col md="9" cols="12">
         <h1 class="detail-title">Cập nhập thông tin</h1>
-        <v-form ref="form" lazy-validation>
-          <v-text-field
-            v-model="formInformation.name"
-            label="Name"
-            required
-          ></v-text-field>
-
-          <v-btn :disabled="!formInformation.valid" class="mr-4" @click="save"
-            >Save</v-btn
-          >
-        </v-form>
+          <ValidationObserver v-slot="{ handleSubmit }">
+            <v-form ref="form" lazy-validation @submit.prevent="handleSubmit(onSubmit)" >
+              <ValidationProvider rules="min" v-slot="{ errors }">
+                <v-text-field
+                  v-model="formInformation.name"
+                  label="Name"
+                  required
+                ></v-text-field>
+                <span>{{ errors[0] }}</span>
+              </ValidationProvider>
+              <v-btn :disabled="!formInformation.valid" class="mr-4" @click="save"
+                >Save</v-btn
+              >
+          </v-form>
+          </ValidationObserver>
       </v-col>
     </v-row>
   </div>
@@ -61,25 +64,54 @@
 
 <script lang="ts">
 import { Component, Vue, Watch, Emit } from "vue-property-decorator";
+import { extend } from 'vee-validate'
+import Api from '../../services/Api'
+
+extend('min', {
+    validate(value: string) {
+        return {
+            valid: value.length >= 6
+        }
+    },
+    message: 'toi thieu 6 ky tu',
+})
+
+interface form {
+  valid: boolean
+  name: string
+}
 
 @Component
 export default class StaffAction extends Vue {
-  item = this.$attrs.item;
+  id = this.$attrs.id;
 
-  formInformation = {
+  private item: Array<any> = []
+
+  formInformation: form = {
     valid: false,
     name: "",
   };
 
+  created() {
+    Api.getItem(this.id).then((response: any) => {
+      this.item = response.data
+    })
+  }
+
   @Watch(`formInformation.name`) onChangeInput() {
-    this.formInformation.valid = true;
+    if (this.formInformation.name.length >= 6) {
+      this.formInformation.valid = true;
+    }
     if (this.formInformation.name == "") {
       this.formInformation.valid = false;
     }
   }
 
   save() {
-    alert(this.formInformation.name)
+    Api.update(parseInt(this.id), this.formInformation.name).then((response: any) => {
+      alert("thanh cong")
+      this.$router.push({name: 'Staff'})
+    })
   }
 }
 </script>
