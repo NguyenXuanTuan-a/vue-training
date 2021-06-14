@@ -5,8 +5,12 @@ class B_employee {
         return http.get("/employee");
     }
 
-    profile(id:number) {
+    profile(id:any) {
         return http.get(`/employee/edit/${id}`);
+    }
+
+    edit(id:any, data:any) {
+        return http.post(`/employee/update/${id}`,data)
     }
 }
 export default new B_employee();

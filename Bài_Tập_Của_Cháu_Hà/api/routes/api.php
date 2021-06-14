@@ -28,6 +28,6 @@ Route::get('/employee', [EmployeeController::class,'index']);
 // Route::group(['prefix' => 'employee'], function () {
     Route::post('/add', [EmployeeController::class,'add']);
     Route::get('/employee/edit/{id}', [EmployeeController::class,'edit']);
-    Route::post('/update/{id}',[EmployeeController::class,'update']);
+    Route::post('/employee/update/{id}',[EmployeeController::class,'update']);
     Route::delete('/delete/{id}',[EmployeeController::class,'delete']);
 // });

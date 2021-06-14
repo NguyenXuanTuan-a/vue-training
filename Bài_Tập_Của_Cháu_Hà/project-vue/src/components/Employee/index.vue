@@ -59,7 +59,6 @@
                 >
                   <v-btn text 
                     class="detail"
-                    @click="Detail(item, key)"
                   > Detail 
                   </v-btn>
                 </router-link>
@@ -146,19 +145,7 @@ export default class App extends Vue {
         console.log(errors);
       });
   }
-
-  Detail(item: Employee, key:number) {
- 
-    item = {} as Employee;
-    // this.currentEmployee = {} as Employee;
-    // this.currentIndex = -1;
-  }
-
-  // setActiveTutorial(employees: Employee, index: number) {
-  //   this.currentEmployee = employees;
-  //   this.currentIndex = index;
-  // }
-
+  
   created() {
     this.retrieveEmployee();
   }
