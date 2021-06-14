@@ -12,10 +12,10 @@ export default {
       },
       {
         name: 'project',
-        url: 'project'
+        url: '/project'
       },{
       name: 'employee',
-        url: 'employee'
+        url: '/employee'
       }
     ],
   }),

@@ -1,28 +1,25 @@
 <div>
     <h1>Danh sách dự án</h1>
     <v-row>
-        <v-col :key="i" v-for="(item,i) in List">
+        <v-col :key="i" v-for="(item,i) in projectList">
             <v-card
                     class="mx-auto"
                     max-width="400"
-                    height="250"
+                    height="180"
                     outlined
             >
                 <v-list-item three-line>
                     <v-list-item-content>
                         <div class="mb-4 text-h4">
-                             {{ item.name }}
+                            {{ item.name }}
+                            <sup v-show="item.important" style="color: red">*</sup>
                         </div>
-                        <v-list-item-title class="text-h5 mb-1">
-                           Giám đốc : {{ item.pm }}
-                        </v-list-item-title>
-                        <v-list-item-subtitle class="text-h6"> Số lượng thành viên : {{ item.teamsize }}</v-list-item-subtitle>
-                        <v-list-item-subtitle class="text-h6"> Khách hàng : {{ item.customer }}</v-list-item-subtitle>
                     </v-list-item-content>
                 </v-list-item>
 
                 <v-card-actions>
                     <v-btn
+                            :to="{ name : 'ProjectDetail', params: { id: item.id, item: item} }"
                             outlined
                             rounded
                             text
