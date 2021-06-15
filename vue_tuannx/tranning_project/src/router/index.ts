@@ -26,11 +26,11 @@ const routes: Array<RouteConfig> = [
      component: () =>import(/* webpackChunkName: "ProjectDetail" */ '../components/project/ProjectListDetail.vue'),
      props: true
    },
-  // {
-  //   path: '/work',
-  //   name: 'Work',
-  //   component: () => import(/* webpackChunkName: "Work" */ '../components/work/Work.vue')
-  // },
+   {
+     path: '/staff',
+     name: 'Staff',
+     component: () => import(/* webpackChunkName: "Work" */ '../components/staff/Staff.vue')
+   },
   // {
   //   path: '/addwork',
   //   name: 'AddWork',
