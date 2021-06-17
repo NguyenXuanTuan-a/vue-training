@@ -1,94 +1,203 @@
 <template>
-  <div>
-    <h1 class="project-header">Danh sách Staff</h1>
-    <v-flex>
-      <StaffDialog />
-    </v-flex>
-    <table id="customers">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Pm</th>
-          <th>TeamSize</th>
-          <th>Customer</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(item, i) in posts" :key="i">
-          <td>{{ item.userId }} <span v-show="item.important">*</span></td>
-          <td>{{ item.id }}</td>
-          <td>{{ item.title }}</td>
-          <td>{{ item.body }}</td>
-          <td>
-            <router-link
-              :to="{
-                name: 'ProjectDetail',
-                params: { id: item.id, item: item },
-              }"
-              >Chi tiết</router-link
-            >
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+ <v-data-table 
+    style="margin-top:50px"
+    :headers="headers"
+    :items="posts"
+    :search="search"
+    sort-by="calories"
+    class="elevation-1"
+  >
+  <template v-slot:top>
+      <v-toolbar style="margin-bottom:50px"
+        flat
+      >
+        <v-toolbar-title>Danh sách Staff</v-toolbar-title>
+        <v-divider
+          class="mx-4"
+          inset
+          vertical
+        ></v-divider>
+        <v-spacer></v-spacer>
+        <v-row style="margin-top:25px">
+        <v-col cols="12" style="text-align:right">
+      <v-dialog max-width="700px"  v-model="dialog">
+        <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          color="primary"
+          dark
+          v-bind="attrs"
+          v-on="on"
+        >
+          Add Staff
+        </v-btn>
+      </template>
+      <v-card>
+        <v-card-title>
+          <span class="text-h5">Add New Staff</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col cols="12">
+                <v-text-field
+                  label="Name*"
+                  v-model="item.name"
+                  :rules="[(v) => !!v || 'Name is required']"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  label="Age*"
+                  v-model="item.age"
+                  :rules="[(v) => !!v || 'Age is required']"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  label="Experience*"
+                  v-model="item.experience"
+                  :rules="[(v) => !!v || 'Experience is required']"
+                  required
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  label="Role*"
+                  v-model="item.role"
+                  :rules="[(v) => !!v || 'Role is required']"
+                  required
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-container>
+          <small>*indicates required field</small>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="blue darken-1"
+            text
+            @click="dialog = false"
+          >
+            Close
+          </v-btn>
+          <v-btn
+            color="blue darken-1"
+            text
+            @click="addNewStaff"
+          >
+            Save
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+        </v-col>
+         <v-col cols="6" style="margin-left:50%">
+         <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Search"
+          single-line
+          hide-details
+          ></v-text-field></v-col>
+        </v-row>
+      </v-toolbar>
+    </template>
+    <template v-slot:item.actions="{ item }">
+      <v-icon
+        small
+        class="mr-2"
+        @click="editStaff(item.id)"
+      >
+        mdi-pencil
+      </v-icon>
+      <v-icon
+        small
+        @click="deleteStaff(item.id)"
+      >
+        mdi-delete
+      </v-icon>
+    </template>
+    <template v-slot:no-data>
+      <v-btn
+        color="red"
+        @click="getAll"
+      >
+        Reset
+      </v-btn>
+    </template>
+  </v-data-table>
 </template>
 
 <script lang="ts">
-import axios from 'axios';
-import StaffDialog from './StaffDialogs.vue'
-export default {
-  components:{StaffDialog},
-  data() {
-    return {
-        posts:[],
-    };
+import { Component, Vue} from "vue-property-decorator";
+//import StaffDialog from './StaffDialogs.vue';
+import StaffService from '@/service/StaffService';
+import Staffs from '@/service/Staff';
+@Component({
+  components: {
+  //  StaffDialog,
   },
-  created(){
-    axios.get(`http://jsonplaceholder.typicode.com/posts`).then(response =>{
-        this.posts = response.data
-    })
+})
+export default class Staff extends Vue{
+    private posts: Staffs[] =[];
+    dialog=false;
+    private response: any;
+    private errors: any;
+    private item={};
+    search="";
+    headers=[
+      {
+          text: 'Id',
+          align: 'start',
+          sortable: false,
+          value: 'id',
+        },
+        { text: 'Name', value: 'name' },
+        { text: 'Age', value: 'age' },
+        { text: 'Experience', value: 'experience' },
+        { text: 'Role', value: 'role' },
+        { text: 'Actions', value: 'actions', sortable: false },
+    ]
+
+    getAll(){
+      StaffService.getAll()
+      .then((response) => {
+        this.posts = response.data;
+        console.log(response.data);
+      })
+      .catch((errors) => {
+        console.log(errors);
+      });
+    }
+
+    deleteStaff(id:number){
+      StaffService.delete(id)
+      .then(() =>{
+        console.log("remove");
+        this.refersh();
+        
+      });
+      alert("Xóa thành công")
+      console.log("xóa");
+    }
+    refersh(){
+      this.getAll();
+    }
+    created() {
+    this.getAll();
+    }
+  addNewStaff() {
+      StaffService.create(this.item).then((response) => {
+        this.item = response.data;
+        this.refersh();
+        this.item={};
+      })
+      .catch((errors) => {
+        console.log(errors);
+      });
+       alert("Thêm thành công")
+        this.dialog=false;
+    }
 }
-};
 </script>
-
-<style scoped>
-.project-header{
-  margin-top:30px;
-  text-align:center;
-}
-#customers {
-  font-family: Arial, Helvetica, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-  margin-top:30px;
-}
-#customers td,
-#customers th {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-
-#customers tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-#customers tr:hover {
-  background-color: #ddd;
-}
-
-#customers th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: #04aa6d;
-  color: white;
-}
-.form-group {
-  text-align: right;
-}
-.form-group input {
-  border: 1px solid black;
-}
-</style>
